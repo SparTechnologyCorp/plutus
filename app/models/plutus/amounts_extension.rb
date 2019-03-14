@@ -18,6 +18,8 @@ module Plutus
         from_date = hash[:from_date].kind_of?(Date) ? hash[:from_date] : Date.parse(hash[:from_date])
         to_date = hash[:to_date].kind_of?(Date) ? hash[:to_date] : Date.parse(hash[:to_date])
         includes(:entry).where('plutus_entries.date' => from_date..to_date).sum(:amount)
+      elsif hash[:user_id]
+        includes(:entry).where('plutus_entries.user_id' => hash[:user_id]).sum(:amount)
       else
         sum(:amount)
       end
